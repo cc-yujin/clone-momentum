@@ -2,24 +2,31 @@ const loginForm = document.querySelector('#login-form');
 const loginInput = document.querySelector('#login-form input');
 const greeting = document.querySelector('#greeting');
 
-const link = document.querySelector('a');
+const HIDDEN_CLASSNAME = 'hidden';
+const USERNAME_KEY = 'username';
 
 function onLoginSubmit(event) {
-  event.preventDefault();
-  console.log(loginInput.value);
-  const username = loginInput.value;
-  loginForm.classList.add('hidden');
-  // greeting.innerHTML = "Hello! " + username;
-  greeting.innerHTML = `Hello! ${username}`;
-  greeting.classList.remove('hidden');
+  event.preventDefault(); //이벤트 막음
+  loginForm.classList.add(HIDDEN_CLASSNAME); // 폼 hidden 클래스 추가
+  const username = loginInput.value; // 입력값 저장
+  localStorage.setItem(USERNAME_KEY, username); //로컬스토리지 저장
+  paintGreetings(username);
 }
 
-function handleLinkClick(e) {
-  event.preventDefault();
-  console.log(e);
-  // alert('clicked!');
-  console.dir(e);
+const savedUsername = localStorage.getItem(USERNAME_KEY);
+
+function paintGreetings(username) {
+  greeting.innerHTML = `Hello! ${username}`; // h1 값 저장
+  greeting.classList.remove(HIDDEN_CLASSNAME); // h1 hidden 없앰
 }
 
 loginForm.addEventListener('submit', onLoginSubmit);
-link.addEventListener('click', handleLinkClick);
+
+
+//맨 처음 실행할 때 1. 값 없는 상태 2. 저장된 상태 (savedUsername)
+if (savedUsername == null) {
+  loginForm.classList.remove(HIDDEN_CLASSNAME);
+  loginForm.addEventListener('submit', onLoginSubmit);
+} else {
+  paintGreetings(savedUsername);
+}
