@@ -6,7 +6,7 @@ const HIDDEN_CLASSNAME = 'hidden';
 const USERNAME_KEY = 'username';
 
 function onLoginSubmit(event) {
-  event.preventDefault(); //이벤트 막음
+  event.preventDefault(); //이벤트 막 음
   loginForm.classList.add(HIDDEN_CLASSNAME); // 폼 hidden 클래스 추가
   const username = loginInput.value; // 입력값 저장
   localStorage.setItem(USERNAME_KEY, username); //로컬스토리지 저장
